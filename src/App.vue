@@ -1,23 +1,14 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import Home from './views/Home.vue';
+import './assets/css/tailwind.css';
 
 export default defineComponent({
-  name: 'App'
+  name: 'App',
+  components: { Home }
 });
 </script>
 
 <template>
-  <header>
-    <nav>
-      <ul>
-        <li>
-          <router-link to="/">Home</router-link>
-        </li>
-        <li>
-          <router-link to="/about">About</router-link>
-        </li>
-      </ul>
-    </nav>
-  </header>
-  <router-view />
+  <Home />
 </template>

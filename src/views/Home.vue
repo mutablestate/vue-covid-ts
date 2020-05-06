@@ -1,32 +1,60 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { useStore } from 'vuex';
+import { defineComponent, ref, computed } from 'vue';
+import dayjs from 'dayjs';
+import { useCovidApi, BASE_URL } from '../composition/useCovidApi';
+import StatsGrid from '../components/StatsGrid.vue';
+import CountryStats from '../components/CountryStats.vue';
+// eslint-disable-next-line no-unused-vars
+import { CovidData } from '../composition/useCovidApi';
 
 export default defineComponent({
   name: 'Home',
-
+  components: {
+    StatsGrid,
+    CountryStats
+  },
   setup() {
-    const store = useStore();
-    return { store };
+    const confirmed = ref(0);
+    const recovered = ref(0);
+    const deaths = ref(0);
+    const lastUpdate = ref('');
+
+    const updateStats = (data: CovidData) => {
+      confirmed.value = data.confirmed.value;
+      recovered.value = data.recovered.value;
+      deaths.value = data.deaths.value;
+      lastUpdate.value = data.lastUpdate;
+    };
+    const { isLoading, error } = useCovidApi({
+      endpoint: BASE_URL,
+      handleData: updateStats
+    });
+    const updatedAt = computed(() => {
+      const date = dayjs(lastUpdate.value);
+      return date.format('YYYY-MM-DD HH:mm:ss Z');
+    });
+
+    return { isLoading, error, confirmed, recovered, deaths, updatedAt };
   }
 });
 </script>
 
 <template>
-  <div>
-    <img src="../assets/logo.png" />
-    <h1>Hello Vue 3!</h1>
-    <button @click="store.commit('increment')">
-      Clicked {{ store.state.count }} times.
-    </button>
+  <div id="app" class="container max-w-s mx-auto">
+    <section v-if="isLoading">
+      loading...
+    </section>
+    <section v-else class="text-center mx-4">
+      <h1 class="text-3xl mb-1 mt-4">COVID-19 Statistics</h1>
+      <p class="text-l">Last Updated</p>
+      <p>{{ updatedAt }}</p>
+      <StatsGrid
+        :confirmed="confirmed"
+        :deaths="deaths"
+        :recovered="recovered"
+        tag="global"
+      />
+      <CountryStats />
+    </section>
   </div>
 </template>
-
-<style scoped>
-img {
-  width: 200px;
-}
-h1 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-</style>
