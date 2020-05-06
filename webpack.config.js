@@ -1,6 +1,6 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env = {}) => ({
   mode: env.prod ? 'production' : 'development',
@@ -44,19 +44,24 @@ module.exports = (env = {}) => ({
       {
         test: /\.css$/,
         use: [
+          'style-loader',
           {
-            loader: MiniCssExtractPlugin.loader,
-            options: { hmr: !env.prod }
+            loader: 'css-loader',
+            options: { importLoaders: 1 }
           },
-          'css-loader'
+          'postcss-loader'
         ]
+      },
+      {
+        test: /\.postcss$/,
+        use: ['style-loader', 'postcss-loader']
       }
     ]
   },
   plugins: [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css'
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false
     })
   ],
   devServer: {
