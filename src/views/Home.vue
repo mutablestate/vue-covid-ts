@@ -1,21 +1,26 @@
-<template>
-  <img src="../logo.png">
-  <h1>Hello Vue 3!</h1>
-  <button @click="store.commit('increment')">Clicked {{ store.state.count }} times.</button>
-</template>
-
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent } from 'vue';
+import { useStore } from 'vuex';
 
 export default defineComponent({
   name: 'Home',
+
   setup() {
-		const store = useStore()
-		return {store}
+    const store = useStore();
+    return { store };
   }
-})
+});
 </script>
+
+<template>
+  <div>
+    <img src="../assets/logo.png" />
+    <h1>Hello Vue 3!</h1>
+    <button @click="store.commit('increment')">
+      Clicked {{ store.state.count }} times.
+    </button>
+  </div>
+</template>
 
 <style scoped>
 img {
