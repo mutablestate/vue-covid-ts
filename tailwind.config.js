@@ -1,7 +1,9 @@
 module.exports = {
   purge: {
-    enabled: process.env.NODE_ENV === 'production',
-    content: ['./src/**/*.html', './src/**/*.vue'],
+    content: [
+      './src/**/*.html',
+      './src/**/*.vue'
+    ],
     options: {
       whitelistPatterns: [
         /-(leave|enter|appear)(|-(to|from|active))$/,

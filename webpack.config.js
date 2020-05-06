@@ -1,5 +1,6 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = (env = {}) => ({
   mode: env.prod ? 'production' : 'development',
@@ -57,7 +58,12 @@ module.exports = (env = {}) => ({
       }
     ]
   },
-  plugins: [new VueLoaderPlugin()],
+  plugins: [
+    new VueLoaderPlugin(),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false
+    })
+  ],
   devServer: {
     inline: true,
     hot: true,

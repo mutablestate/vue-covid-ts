@@ -44,6 +44,9 @@ export default defineComponent({
     <section v-if="isLoading">
       loading...
     </section>
+    <section v-if="error">
+      <p class="text-l text-red-500">{{ error.message || error }}</p>
+    </section>
     <section v-else class="text-center mx-4">
       <h1 class="text-3xl mb-1 mt-4">COVID-19 Statistics</h1>
       <p class="text-l">Last Updated</p>

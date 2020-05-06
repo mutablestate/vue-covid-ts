@@ -1,12 +1,17 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
-		"module": "esnext",
+		"target": "es5",
+		"module": "commonjs",
 		"strict": true,
+		"strictNullChecks": true,
 		"importHelpers": true,
+		"removeComments": true,
 		"moduleResolution": "node",
 		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
 		"allowSyntheticDefaultImports": true,
+		"allowJs": true,
+		"noEmitOnError": true,
 		"sourceMap": true,
 		"baseUrl": ".",
 		"paths": {

@@ -4,11 +4,6 @@ export const BASE_URL = 'https://covid19.mathdro.id/api';
 
 declare const RefSymbol: unique symbol;
 export interface Ref<T = any> {
-  /**
-   * Type differentiator only.
-   * We need this to be in public d.ts but don't want it to show up in IDE
-   * autocomplete, so we use a private Symbol instead.
-   */
   [RefSymbol]: true;
   value: T;
 }
